@@ -26,7 +26,7 @@ modules:
       - ar x hoppscotch.deb
       - tar -xf data.tar.*
 
-      - install -Dm755 usr/bin/hoppscotch /app/bin/hoppscotch
+      - install -Dm755 usr/bin/hoppscotch-desktop /app/bin/hoppscotch
 
       - cp -r usr/share/icons /app/share/icons
 
