@@ -35,7 +35,7 @@ modules:
 
       - cp -r usr/share/icons /app/share/icons
 
-      - install -Dm644 usr/share/applications/hoppscotch.desktop /app/share/applications/com.hoppscotch.Hoppscotch.desktop
+      - install -Dm644 usr/share/applications/Hoppscotch.desktop /app/share/applications/com.hoppscotch.Hoppscotch.desktop
       - install -Dm644 com.hoppscotch.Hoppscotch.metainfo.xml /app/share/metainfo/com.hoppscotch.Hoppscotch.metainfo.xml
 
       - sed -i 's|^Exec=.*|Exec=hoppscotch|' /app/share/applications/com.hoppscotch.Hoppscotch.desktop
