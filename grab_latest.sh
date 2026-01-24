@@ -14,7 +14,7 @@ else
 fi
 
 # --- Fetch latest Hoppscotch release ---
-LATEST_JSON=$(curl -s https://api.github.com/repos/hoppscotch/releases \
+LATEST_JSON=$(curl -s https://api.github.com/repos/hoppscotch/releases/releases \
   | jq -c "[.[] | select(.tag_name != null and ($FILTER))] | sort_by(.created_at) | last")
 
 LATEST_VERSION=$(echo "$LATEST_JSON" | jq -r '.tag_name')
