@@ -1,6 +1,6 @@
 app-id: com.hoppscotch.Hoppscotch
 runtime: org.freedesktop.Platform
-runtime-version: "24.08" # Usa una versione stabile (23.08 o 24.08)
+runtime-version: "25.08"
 sdk: org.freedesktop.Sdk
 command: hoppscotch
 
