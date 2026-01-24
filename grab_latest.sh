@@ -17,13 +17,13 @@ fi
 LATEST_JSON=$(curl -s https://api.github.com/repos/hoppscotch/releases/releases \
   | jq -c "[.[] | select(.tag_name != null and ($FILTER))] | sort_by(.created_at) | last")
 
-LATEST_VERSION=$(echo "$LATEST_JSON" | jq -r '.tag_name')
+LATEST_TAG=$(echo "$LATEST_JSON" | jq -r '.tag_name')
 IS_PRERELEASE=$(echo "$LATEST_JSON" | jq -r '.prerelease')
 
 # Remove 'v' prefix from version
-LATEST_VERSION=${LATEST_VERSION#v}
+LATEST_VERSION=${LATEST_TAG#v}
 
-if [[ -z "$LATEST_VERSION" || "$LATEST_VERSION" == "null" ]]; then
+if [[ -z "$LATEST_TAG" || "$LATEST_TAG" == "null" ]]; then
   echo "   Failed to fetch latest version tag from GitHub."
   exit 1
 fi
@@ -64,10 +64,17 @@ else
 fi
 
 # --- Compute new SHA256 ---
-DOWNLOAD_URL="$REPO_URL/$LATEST_VERSION/Hoppscotch_linux_x64.deb"
+DOWNLOAD_URL="$REPO_URL/$LATEST_TAG/Hoppscotch_linux_x64.deb"
 echo "   Downloading $DOWNLOAD_URL to compute sha256..."
 TMP_FILE=$(mktemp)
-curl -L -s -o "$TMP_FILE" "$DOWNLOAD_URL"
+HTTP_CODE=$(curl -L -s -w "%{http_code}" -o "$TMP_FILE" "$DOWNLOAD_URL")
+
+if [[ "$HTTP_CODE" != "200" ]]; then
+  echo "ERROR: Download failed with HTTP code $HTTP_CODE"
+  echo "URL: $DOWNLOAD_URL"
+  rm -f "$TMP_FILE"
+  exit 1
+fi
 
 NEW_SHA256=$(sha256sum "$TMP_FILE" | awk '{print $1}')
 rm -f "$TMP_FILE"
