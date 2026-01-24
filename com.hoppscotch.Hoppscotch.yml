@@ -26,6 +26,11 @@ modules:
       - ar x hoppscotch.deb
       - tar -xf data.tar.*
 
+      - mkdir -p /app/bin
+      - mkdir -p /app/share
+      - mkdir -p /app/share/applications
+      - mkdir -p /app/share/icons
+
       - install -Dm755 usr/bin/hoppscotch-desktop /app/bin/hoppscotch
 
       - cp -r usr/share/icons /app/share/icons
