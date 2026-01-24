@@ -20,6 +20,9 @@ LATEST_JSON=$(curl -s https://api.github.com/repos/hoppscotch/releases/releases 
 LATEST_VERSION=$(echo "$LATEST_JSON" | jq -r '.tag_name')
 IS_PRERELEASE=$(echo "$LATEST_JSON" | jq -r '.prerelease')
 
+# Remove 'v' prefix from version
+LATEST_VERSION=${LATEST_VERSION#v}
+
 if [[ -z "$LATEST_VERSION" || "$LATEST_VERSION" == "null" ]]; then
   echo "   Failed to fetch latest version tag from GitHub."
   exit 1
