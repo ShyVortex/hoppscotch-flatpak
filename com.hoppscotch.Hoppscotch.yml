@@ -18,6 +18,8 @@ finish-args:
   - --env=DCONF_USER_CONFIG_DIR=.config/dconf
   - --filesystem=xdg-run/dconf
   - --filesystem=~/.config/dconf:ro
+  # --- GPU-specific fixes ---
+  - --env=WEBKIT_DISABLE_DMABUF_RENDERER=1
 
 modules:
   - name: hoppscotch
